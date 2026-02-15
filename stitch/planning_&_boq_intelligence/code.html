@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="h-full antialiased" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Planning &amp; BOQ Intelligence - HSI Smart Execution System™</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "primary-dark": "#0f66bd",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "charcoal": "#2D3748",
+                        "bronze": "#A08C5B",
+                        "bronze-light": "#E8E2D2",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for data grid */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* Sticky Column Styles */
+        .sticky-col-left {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+        }
+        .sticky-shadow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
+            pointer-events: none;
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display h-full flex flex-col overflow-hidden">
+<!-- Top Navigation / Header -->
+<header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 h-16 flex items-center justify-between px-6 shrink-0 z-20">
+<div class="flex items-center gap-4">
+<div class="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+<span class="text-primary hover:underline cursor-pointer">HSI Smart Execution™</span>
+<span class="material-icons text-base mx-1">chevron_right</span>
+<span class="text-primary hover:underline cursor-pointer">Project Alpha-7</span>
+<span class="material-icons text-base mx-1">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-semibold">Planning &amp; BOQ</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-800 text-xs font-semibold border border-yellow-200">v3.2 Draft</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative group">
+<button class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons text-lg">history</span>
+                    History
+                </button>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons text-lg">file_upload</span>
+                Import
+            </button>
+<button class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons text-lg">file_download</span>
+                Export
+            </button>
+<button class="ml-2 bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+<span class="material-icons text-sm">save</span>
+                Save Version
+            </button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Panel: BOQ Grid -->
+<section class="flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 relative">
+<!-- Grid Toolbar -->
+<div class="h-14 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 bg-slate-50/50 dark:bg-slate-800/50">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-icons absolute left-2.5 top-2 text-slate-400 text-lg">search</span>
+<input class="pl-9 pr-4 py-1.5 w-64 text-sm bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md focus:ring-2 focus:ring-primary focus:border-primary transition-shadow" placeholder="Search line items..." type="text"/>
+</div>
+<button class="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons text-lg">filter_list</span>
+                        Filter
+                    </button>
+<button class="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons text-lg">view_column</span>
+                        Columns
+                    </button>
+</div>
+<div class="flex items-center gap-2 text-sm text-slate-500">
+<span>Showing 142 items</span>
+<span class="w-1 h-1 bg-slate-300 rounded-full"></span>
+<span>Total: <strong class="text-slate-800 dark:text-white">$145,200.00</strong></span>
+</div>
+</div>
+<!-- Data Grid Table Container -->
+<div class="flex-1 overflow-auto custom-scrollbar relative">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-800 sticky top-0 z-20 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+<tr>
+<th class="p-4 border-b border-r border-slate-200 dark:border-slate-700 w-12 sticky-col-left bg-slate-50 dark:bg-slate-800 sticky-shadow text-center">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</th>
+<th class="p-3 border-b border-r border-slate-200 dark:border-slate-700 w-24">Code</th>
+<th class="p-3 border-b border-r border-slate-200 dark:border-slate-700 min-w-[280px]">Description</th>
+<th class="p-3 border-b border-r border-slate-200 dark:border-slate-700 w-20 text-center">Unit</th>
+<th class="p-3 border-b border-r border-slate-200 dark:border-slate-700 w-24 text-right bg-blue-50/30 dark:bg-blue-900/10">Qty</th>
+<th class="p-3 border-b border-r border-slate-200 dark:border-slate-700 w-32 text-right bg-blue-50/30 dark:bg-blue-900/10">Unit Rate</th>
+<th class="p-3 border-b border-r border-slate-200 dark:border-slate-700 w-32 text-right">Material</th>
+<th class="p-3 border-b border-r border-slate-200 dark:border-slate-700 w-32 text-right">Labor</th>
+<th class="p-3 border-b border-slate-200 dark:border-slate-700 w-36 text-right font-bold text-slate-700 dark:text-slate-200">Total</th>
+<th class="p-3 border-b border-slate-200 dark:border-slate-700 w-12 sticky right-0 bg-slate-50 dark:bg-slate-800"></th>
+</tr>
+</thead>
+<tbody class="text-sm text-slate-700 dark:text-slate-200 divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Group Header -->
+<tr class="bg-slate-100 dark:bg-slate-800/80">
+<td class="px-4 py-2 font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2" colspan="10">
+<span class="material-icons text-sm transform rotate-90 text-slate-400">play_arrow</span>
+                                01. General Requirements
+                            </td>
+</tr>
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="p-4 border-r border-slate-100 dark:border-slate-800 text-center sticky-col-left bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800 sticky-shadow">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-mono text-xs text-slate-500">GEN-001</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-medium">Site Mobilization &amp; Setup</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-center">LS</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="1.00"/>
+</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="5,000.00"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">2,000.00</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">3,000.00</td>
+<td class="p-3 text-right font-mono font-semibold">5,000.00</td>
+<td class="p-2 text-center sticky right-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800">
+<button class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-primary transition-opacity">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Group Header 2 -->
+<tr class="bg-slate-100 dark:bg-slate-800/80 mt-4">
+<td class="px-4 py-2 font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2" colspan="10">
+<span class="material-icons text-sm transform rotate-90 text-slate-400">play_arrow</span>
+                                03. Finishes - Flooring
+                            </td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="p-4 border-r border-slate-100 dark:border-slate-800 text-center sticky-col-left bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800 sticky-shadow">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-mono text-xs text-slate-500">FLR-M01</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-medium">Italian Carrara Marble (60x60cm)</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-center">m²</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="120.00"/>
+</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="85.50"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">7,800.00</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">2,460.00</td>
+<td class="p-3 text-right font-mono font-semibold">10,260.00</td>
+<td class="p-2 text-center sticky right-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800">
+<button class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-primary transition-opacity">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="p-4 border-r border-slate-100 dark:border-slate-800 text-center sticky-col-left bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800 sticky-shadow">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-mono text-xs text-slate-500">FLR-W03</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-medium">Engineered Oak Wood Flooring</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-center">m²</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="215.50"/>
+</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="62.00"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">10,775.00</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">2,586.00</td>
+<td class="p-3 text-right font-mono font-semibold">13,361.00</td>
+<td class="p-2 text-center sticky right-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800">
+<button class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-primary transition-opacity">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group">
+<td class="p-4 border-r border-slate-100 dark:border-slate-800 text-center sticky-col-left bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800 sticky-shadow">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-mono text-xs text-slate-500">FLR-S01</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 font-medium">Skirting Board (100mm) - Oak Match</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-center">rm</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="85.00"/>
+</td>
+<td class="p-0 border-r border-slate-100 dark:border-slate-800">
+<input class="w-full h-full p-3 text-right bg-transparent border-none focus:ring-inset focus:ring-2 focus:ring-primary text-primary font-medium" type="text" value="12.50"/>
+</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">637.50</td>
+<td class="p-3 border-r border-slate-100 dark:border-slate-800 text-right font-mono text-slate-500">425.00</td>
+<td class="p-3 text-right font-mono font-semibold">1,062.50</td>
+<td class="p-2 text-center sticky right-0 bg-white dark:bg-slate-900 group-hover:bg-slate-50 dark:group-hover:bg-slate-800">
+<button class="opacity-0 group-hover:opacity-100 text-slate-400 hover:text-primary transition-opacity">
+<span class="material-icons text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Empty Rows Filler for visuals -->
+<tr class="h-full">
+<td class="border-t border-slate-100 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-800/20" colspan="10"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Sticky Grid Footer (Total) -->
+<div class="h-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between px-6 shadow-[0_-5px_15px_rgba(0,0,0,0.05)] z-20">
+<div class="text-sm text-slate-500">
+                    Calculated on <span class="font-medium text-slate-700 dark:text-slate-300">142 items</span>
+</div>
+<div class="flex items-center gap-12">
+<div class="text-right">
+<div class="text-xs text-slate-500 uppercase tracking-wide">Total Material</div>
+<div class="font-mono text-slate-700 dark:text-slate-300 font-medium">$85,420.00</div>
+</div>
+<div class="text-right">
+<div class="text-xs text-slate-500 uppercase tracking-wide">Total Labor</div>
+<div class="font-mono text-slate-700 dark:text-slate-300 font-medium">$59,780.00</div>
+</div>
+<div class="text-right pl-8 border-l border-slate-200 dark:border-slate-700">
+<div class="text-xs text-primary uppercase tracking-wide font-bold">Grand Total</div>
+<div class="font-mono text-xl text-slate-900 dark:text-white font-bold">$145,200.00</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Margin Simulation Sidebar -->
+<aside class="w-96 bg-slate-50 dark:bg-[#15202B] border-l border-slate-200 dark:border-slate-800 flex flex-col shrink-0 shadow-xl z-30">
+<!-- Sidebar Header -->
+<div class="h-14 px-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
+<h2 class="font-semibold text-charcoal dark:text-white flex items-center gap-2">
+<span class="material-icons text-bronze dark:text-bronze-light">analytics</span>
+                    Margin Intelligence
+                </h2>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+<span class="material-icons text-xl">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-5 space-y-6">
+<!-- Simulation Mode Toggle -->
+<div class="flex items-center justify-between p-4 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/20">
+<div>
+<div class="text-sm font-bold text-primary dark:text-blue-400">Simulation Mode</div>
+<div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Visualize price impacts in real-time</div>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+</div>
+</div>
+<!-- Global Inputs -->
+<div class="space-y-4">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Global Parameters</h3>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Waste Factor Overhead</label>
+<div class="relative">
+<input class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 shadow-sm focus:border-primary focus:ring-primary sm:text-sm pr-8" type="number" value="5.0"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-slate-500 sm:text-sm">%</span>
+</div>
+</div>
+<p class="mt-1 text-xs text-slate-500">Applied to all material costs.</p>
+</div>
+<div>
+<div class="flex justify-between mb-1.5">
+<label class="text-sm font-medium text-slate-700 dark:text-slate-300">Target Margin</label>
+<span class="text-sm font-bold text-primary">18.5%</span>
+</div>
+<input class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-primary" max="50" min="0" step="0.5" type="range" value="18.5"/>
+<div class="flex justify-between mt-1 text-xs text-slate-400">
+<span>0%</span>
+<span>25%</span>
+<span>50%</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Contingency Fund</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="text-slate-500 sm:text-sm">$</span>
+</div>
+<input class="block w-full rounded-lg border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 pl-7 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" type="text" value="5,000.00"/>
+</div>
+</div>
+</div>
+<hr class="border-slate-200 dark:border-slate-700"/>
+<!-- Impact Summary -->
+<div class="space-y-3">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Simulation Impact</h3>
+<div class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Original Total</span>
+<span class="font-mono text-slate-700 dark:text-slate-300 line-through decoration-slate-400">$145,200.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium text-charcoal dark:text-white">Simulated Total</span>
+<span class="font-mono text-lg font-bold text-bronze dark:text-bronze-light">$158,415.00</span>
+</div>
+<div class="pt-2 border-t border-dashed border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<span class="text-xs font-medium text-slate-500">Variance (Delta)</span>
+<span class="text-xs font-bold text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-icons text-[10px]">arrow_upward</span>
+                                +9.1%
+                            </span>
+</div>
+</div>
+<!-- Mini Chart Visualization -->
+<div class="h-24 w-full bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 relative overflow-hidden flex items-end px-4 pt-4 gap-2" data-alt="Abstract bar chart representing cost increase simulation">
+<!-- Bars -->
+<div class="w-1/3 bg-slate-300 dark:bg-slate-600 rounded-t h-[60%]"></div>
+<div class="w-1/3 bg-slate-300 dark:bg-slate-600 rounded-t h-[45%]"></div>
+<div class="w-1/3 bg-bronze dark:bg-bronze-light opacity-80 rounded-t h-[75%] relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] font-bold text-bronze dark:text-bronze-light">New</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Footer Actions -->
+<div class="p-5 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
+<button class="w-full bg-primary hover:bg-primary-dark text-white py-2.5 rounded-lg text-sm font-semibold shadow-md transition-all flex justify-center items-center gap-2">
+                    Apply to Draft
+                    <span class="material-icons text-sm">check</span>
+</button>
+<button class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                    Reset Simulation
+                </button>
+</div>
+</aside>
+</main>
+<!-- Version History Tooltip (Hidden by default, shown for structure) -->
+<!-- This would be triggered by hovering "v3.2 Draft" in header -->
+</body></html>

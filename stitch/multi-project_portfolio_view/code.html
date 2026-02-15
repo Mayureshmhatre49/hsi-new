@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HSI Smart Execution System™ - Portfolio View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "primary-dark": "#0e5eb0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "neutral-surface": "#ffffff",
+                        "neutral-border": "#e2e8f0",
+                        // Semantic colors for risk
+                        "risk-high": "#ef4444",
+                        "risk-med": "#f59e0b",
+                        "risk-low": "#10b981",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(19, 127, 236, 0.08)',
+                        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for tables */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Heatmap Grid Pattern */
+        .heatmap-grid {
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px),
+            linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
+            background-size: 25% 25%;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<nav class="bg-white dark:bg-slate-900 border-b border-neutral-border dark:border-slate-800 sticky top-0 z-50 h-16 flex items-center justify-between px-6 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white font-bold text-lg">H</div>
+<span class="font-bold text-lg tracking-tight text-slate-900 dark:text-white">HSI <span class="text-primary font-normal">Smart Execution</span></span>
+</div>
+<div class="hidden md:flex items-center space-x-1">
+<a class="px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="px-3 py-2 text-sm font-medium text-primary bg-primary/10 rounded-md" href="#">Portfolio</a>
+<a class="px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#">Projects</a>
+<a class="px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#">Analytics</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-slate-400 text-[20px]">search</span>
+</span>
+<input class="pl-10 pr-4 py-2 w-64 border border-neutral-border rounded-lg text-sm bg-slate-50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all dark:bg-slate-800 dark:border-slate-700" placeholder="Search projects, regions..." type="text"/>
+</div>
+<button class="relative p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="h-8 w-8 rounded-full bg-gradient-to-tr from-primary to-blue-400 p-[2px] cursor-pointer" data-alt="User profile avatar gradient">
+<img alt="Profile" class="rounded-full bg-white h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMzj-vvJFiHuDjcJz8w7GqfPohGvmRbTrwtAsjy7JEcrYKUJ_pvjqkZuJBWFa7gL1tiDVYWzKBKmg07OrDdz_HwjIc4fHV4dsEwwIl4uytJdE09Mhsytb-o6bl6IXTB4tEAF0_5tKtsqnnuViDuwSbNyjsauJb8t0RxMWljybvmDuAoHk06UPcNqN5zr-ehXtju18hF2fUkZXnUdDXqqRoD9tC6eVc5tZy-WkBewrWF2cI3WjmRsiEVUx9UYAlQAXmYOtv3nOvGScL"/>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 p-6 lg:p-8 max-w-[1600px] mx-auto w-full">
+<!-- Header & Filters -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<div class="flex items-center gap-2 text-sm text-slate-500 mb-1">
+<span>Portfolio</span>
+<span class="material-icons-outlined text-[14px]">chevron_right</span>
+<span>Global Operations</span>
+</div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white">Portfolio Overview</h1>
+<p class="text-slate-500 text-sm mt-1">Real-time risk assessment across 24 active interior execution sites.</p>
+</div>
+<div class="flex items-center gap-3 bg-white dark:bg-slate-800 p-1.5 rounded-lg border border-neutral-border dark:border-slate-700 shadow-sm">
+<div class="flex items-center px-3 py-1.5 border-r border-neutral-border dark:border-slate-600 gap-2 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors">
+<span class="material-icons-outlined text-slate-400 text-[18px]">calendar_today</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Q3 2024</span>
+<span class="material-icons-outlined text-slate-400 text-[16px]">expand_more</span>
+</div>
+<div class="flex items-center px-3 py-1.5 border-r border-neutral-border dark:border-slate-600 gap-2 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 rounded transition-colors">
+<span class="material-icons-outlined text-slate-400 text-[18px]">filter_alt</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">All Regions</span>
+</div>
+<button class="bg-primary hover:bg-primary-dark text-white text-sm font-medium px-4 py-2 rounded shadow-sm flex items-center gap-2 transition-colors">
+<span class="material-icons-outlined text-[18px]">file_download</span>
+                    Export Report
+                </button>
+</div>
+</header>
+<!-- KPI Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg border border-neutral-border dark:border-slate-700 shadow-card">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-primary">
+<span class="material-icons-outlined">apartment</span>
+</div>
+<span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded">+12% YoY</span>
+</div>
+<h3 class="text-slate-500 text-sm font-medium">Active Projects</h3>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">24</span>
+<span class="text-sm text-slate-400">sites</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg border border-neutral-border dark:border-slate-700 shadow-card">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg text-emerald-600">
+<span class="material-icons-outlined">payments</span>
+</div>
+<span class="text-xs font-semibold text-slate-500 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">On Target</span>
+</div>
+<h3 class="text-slate-500 text-sm font-medium">Total CapEx Deployed</h3>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">$145.2M</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg border border-neutral-border dark:border-slate-700 shadow-card">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-50 dark:bg-amber-900/30 rounded-lg text-amber-500">
+<span class="material-icons-outlined">warning_amber</span>
+</div>
+<span class="text-xs font-semibold text-amber-600 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded">Action Needed</span>
+</div>
+<h3 class="text-slate-500 text-sm font-medium">Budget at Risk</h3>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">$4.2M</span>
+<span class="text-sm text-slate-400">across 3 sites</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-slate-800 p-5 rounded-lg border border-neutral-border dark:border-slate-700 shadow-card">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-indigo-500">
+<span class="material-icons-outlined">schedule</span>
+</div>
+<span class="text-xs font-semibold text-red-600 bg-red-50 dark:bg-red-900/30 px-2 py-1 rounded">-2.4 Days</span>
+</div>
+<h3 class="text-slate-500 text-sm font-medium">Avg Schedule Variance</h3>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">Delayed</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+<!-- RISK HEATMAP WIDGET -->
+<div class="xl:col-span-1 bg-white dark:bg-slate-800 rounded-lg border border-neutral-border dark:border-slate-700 shadow-card flex flex-col h-[500px]">
+<div class="p-6 border-b border-neutral-border dark:border-slate-700 flex justify-between items-center">
+<div>
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white">Risk Heatmap</h2>
+<p class="text-xs text-slate-500">Schedule vs. Budget Variance</p>
+</div>
+<button class="text-primary text-sm font-medium hover:text-primary-dark">View Details</button>
+</div>
+<div class="relative flex-1 p-6 flex flex-col">
+<!-- Y Axis Label -->
+<div class="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-semibold text-slate-400 tracking-wider">BUDGET VARIANCE</div>
+<div class="flex-1 flex flex-col ml-6">
+<!-- Top Labels (X Axis) -->
+<div class="flex justify-between text-xs text-slate-400 mb-2 px-6">
+<span>Behind Schedule</span>
+<span>On Schedule</span>
+<span>Ahead of Schedule</span>
+</div>
+<!-- Chart Area -->
+<div class="relative flex-1 bg-slate-50 dark:bg-slate-900/50 rounded border border-neutral-border dark:border-slate-700 heatmap-grid p-4">
+<!-- Quadrant Backgrounds (Subtle) -->
+<div class="absolute inset-0 grid grid-cols-2 grid-rows-2">
+<div class="bg-red-50/50 dark:bg-red-900/10 border-r border-b border-dashed border-red-200 dark:border-red-900/30"></div> <!-- High Risk -->
+<div class="bg-amber-50/30 dark:bg-amber-900/5 border-b border-dashed border-amber-200 dark:border-amber-900/30"></div>
+<div class="bg-amber-50/30 dark:bg-amber-900/5 border-r border-dashed border-amber-200 dark:border-amber-900/30"></div>
+<div class="bg-emerald-50/30 dark:bg-emerald-900/5"></div> <!-- Low Risk -->
+</div>
+<!-- Data Points -->
+<!-- Project A: High Risk -->
+<div class="absolute top-[20%] left-[20%] group cursor-pointer">
+<div class="w-4 h-4 rounded-full bg-risk-high shadow-lg ring-4 ring-white dark:ring-slate-800 flex items-center justify-center text-[8px] text-white font-bold relative z-10 transition-transform hover:scale-125">
+                                    3
+                                </div>
+<!-- Tooltip -->
+<div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-900 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+<div class="font-bold mb-1">Project Alpha (NY)</div>
+<div class="flex justify-between text-slate-300"><span>Budget:</span> <span class="text-red-400">+12%</span></div>
+<div class="flex justify-between text-slate-300"><span>Schedule:</span> <span class="text-red-400">-15 Days</span></div>
+</div>
+</div>
+<!-- Project B: Medium Risk -->
+<div class="absolute top-[40%] left-[45%] group cursor-pointer">
+<div class="w-4 h-4 rounded-full bg-risk-med shadow-lg ring-4 ring-white dark:ring-slate-800 flex items-center justify-center text-[8px] text-white font-bold relative z-10 transition-transform hover:scale-125">
+                                    5
+                                </div>
+</div>
+<!-- Project C: Low Risk -->
+<div class="absolute top-[70%] left-[80%] group cursor-pointer">
+<div class="w-4 h-4 rounded-full bg-risk-low shadow-lg ring-4 ring-white dark:ring-slate-800 flex items-center justify-center text-[8px] text-white font-bold relative z-10 transition-transform hover:scale-125">
+                                    12
+                                </div>
+</div>
+<!-- Project D: Extreme Outlier -->
+<div class="absolute top-[10%] left-[15%] group cursor-pointer">
+<div class="w-6 h-6 rounded-full bg-white border-2 border-risk-high shadow-lg flex items-center justify-center relative z-10 transition-transform hover:scale-110">
+<span class="material-icons-outlined text-risk-high text-[14px]">priority_high</span>
+</div>
+</div>
+<!-- Center Lines Labels -->
+<div class="absolute top-1/2 left-0 w-full border-t border-slate-300 dark:border-slate-600 opacity-30 pointer-events-none"></div>
+<div class="absolute left-1/2 top-0 h-full border-l border-slate-300 dark:border-slate-600 opacity-30 pointer-events-none"></div>
+</div>
+<!-- Bottom Axis Label -->
+<div class="text-center mt-3 text-xs font-semibold text-slate-400 tracking-wider">SCHEDULE VARIANCE</div>
+</div>
+</div>
+</div>
+<!-- BENCHMARKING TABLE -->
+<div class="xl:col-span-2 bg-white dark:bg-slate-800 rounded-lg border border-neutral-border dark:border-slate-700 shadow-card flex flex-col h-[500px]">
+<div class="p-6 border-b border-neutral-border dark:border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white">Project Benchmarks</h2>
+<p class="text-xs text-slate-500">Performance metrics across regions</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-slate-400 text-[16px]">search</span>
+</span>
+<input class="pl-8 pr-3 py-1.5 text-xs border border-neutral-border rounded text-slate-600 bg-slate-50 focus:outline-none focus:border-primary dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200" placeholder="Filter..." type="text"/>
+</div>
+<button class="p-1.5 text-slate-400 hover:text-primary border border-neutral-border rounded hover:bg-slate-50 transition-colors">
+<span class="material-icons-outlined text-[18px]">tune</span>
+</button>
+</div>
+</div>
+<div class="overflow-auto custom-scrollbar flex-1">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-900/50 sticky top-0 z-10">
+<tr>
+<th class="py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-neutral-border dark:border-slate-700">Project</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-neutral-border dark:border-slate-700">Region</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-neutral-border dark:border-slate-700 text-right">Budget Utilization</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-neutral-border dark:border-slate-700 text-right">Schedule</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-neutral-border dark:border-slate-700 text-center">Status</th>
+<th class="py-3 px-4 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-neutral-border dark:border-slate-700 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-neutral-border dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-outlined text-[16px]">business</span>
+</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">Project Alpha</div>
+<div class="text-xs text-slate-500">Commercial HQ</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-600 dark:text-slate-300">New York, USA</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">112%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-risk-high w-full" style="width: 100%"></div>
+</div>
+<div class="text-[10px] text-red-500 mt-0.5">Over Budget</div>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">85%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-risk-med w-[85%]"></div>
+</div>
+<div class="text-[10px] text-amber-500 mt-0.5">Delayed 2w</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                        Critical
+                                    </span>
+</td>
+<td class="py-4 px-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600">
+<span class="material-icons-outlined text-[16px]">storefront</span>
+</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">Tokyo Retail Hub</div>
+<div class="text-xs text-slate-500">Retail Expansion</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-600 dark:text-slate-300">Tokyo, JPN</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">45%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary w-[45%]"></div>
+</div>
+<div class="text-[10px] text-slate-400 mt-0.5">On Track</div>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">48%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-emerald-500 w-[48%]"></div>
+</div>
+<div class="text-[10px] text-emerald-500 mt-0.5">Ahead 3d</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
+                                        Healthy
+                                    </span>
+</td>
+<td class="py-4 px-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-outlined text-[16px]">science</span>
+</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">Berlin R&amp;D Lab</div>
+<div class="text-xs text-slate-500">Lab Fitout</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-600 dark:text-slate-300">Berlin, DE</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">92%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-amber-500 w-[92%]"></div>
+</div>
+<div class="text-[10px] text-amber-500 mt-0.5">Near Cap</div>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">90%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary w-[90%]"></div>
+</div>
+<div class="text-[10px] text-slate-400 mt-0.5">On Schedule</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
+                                        At Risk
+                                    </span>
+</td>
+<td class="py-4 px-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors group">
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-icons-outlined text-[16px]">domain</span>
+</div>
+<div>
+<div class="text-sm font-medium text-slate-900 dark:text-white">London West HQ</div>
+<div class="text-xs text-slate-500">Office Reno</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-600 dark:text-slate-300">London, UK</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">22%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary w-[22%]"></div>
+</div>
+<div class="text-[10px] text-slate-400 mt-0.5">On Track</div>
+</td>
+<td class="py-4 px-4 text-right">
+<div class="text-sm font-medium text-slate-900 dark:text-white">20%</div>
+<div class="w-full h-1.5 bg-slate-100 rounded-full mt-1 overflow-hidden">
+<div class="h-full bg-primary w-[20%]"></div>
+</div>
+<div class="text-[10px] text-slate-400 mt-0.5">On Schedule</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
+                                        Healthy
+                                    </span>
+</td>
+<td class="py-4 px-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual Footer / Legend (Optional) -->
+<footer class="bg-white dark:bg-slate-900 border-t border-neutral-border dark:border-slate-800 py-4 px-8 mt-auto hidden md:block">
+<div class="flex items-center justify-between text-xs text-slate-500">
+<div class="flex items-center gap-6">
+<span><strong class="text-slate-700 dark:text-slate-300">System Status:</strong> Operational</span>
+<span><strong class="text-slate-700 dark:text-slate-300">Last Sync:</strong> 2 mins ago</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-risk-low"></span>
+<span>Healthy</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-risk-med"></span>
+<span>Warning</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-risk-high"></span>
+<span>Critical</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

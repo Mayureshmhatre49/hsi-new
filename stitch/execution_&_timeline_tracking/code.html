@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Execution &amp; Timeline Tracking - HSI Smart Execution System™</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "primary-light": "#d0e6fd", 
+                        "primary-dark": "#0b5cb0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2632",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>.timeline-scroll::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .timeline-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .timeline-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark .timeline-scroll::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }.heatmap-segment {
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.1),
+                rgba(255,255,255,0.1) 4px,
+                transparent 4px,
+                transparent 8px
+            );
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-hidden">
+<nav class="h-16 bg-surface-light dark:bg-surface-dark border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-6 shrink-0 z-30">
+<div class="flex items-center gap-4">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-icons text-primary">apartment</span>
+</div>
+<div>
+<h1 class="font-semibold text-lg leading-tight">Project Alpha: Interior Fit-out</h1>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span>Projects</span>
+<span class="material-icons text-[10px]">chevron_right</span>
+<span>Site A</span>
+<span class="material-icons text-[10px]">chevron_right</span>
+<span class="text-primary font-medium">Timeline Execution</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1">
+<button class="px-3 py-1 text-xs font-medium bg-white dark:bg-slate-700 shadow-sm rounded text-primary dark:text-white">Timeline</button>
+<button class="px-3 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">List</button>
+<button class="px-3 py-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">Board</button>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="p-2 text-slate-500 hover:text-primary transition-colors relative">
+<span class="material-icons">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-surface-dark"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-blue-400 flex items-center justify-center text-white text-xs font-bold border-2 border-white dark:border-surface-dark shadow-sm">
+            JD
+        </div>
+</div>
+</nav>
+<main class="flex-1 flex overflow-hidden">
+<div class="flex-1 flex flex-col min-w-0 bg-surface-light dark:bg-surface-dark m-4 mr-0 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+<div class="h-14 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-4 bg-slate-50/50 dark:bg-slate-800/30">
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-3 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-dark transition-colors shadow-sm shadow-primary/30">
+<span class="material-icons text-sm">add</span> Add Task
+                </button>
+<div class="h-4 w-px bg-slate-300 dark:bg-slate-600"></div>
+<div class="flex items-center gap-2 text-sm">
+<span class="text-slate-500 dark:text-slate-400">View:</span>
+<select class="bg-transparent border-none text-slate-700 dark:text-slate-200 font-medium text-sm focus:ring-0 cursor-pointer py-0 pl-0 pr-6">
+<option>Daily</option>
+<option selected="">Weekly</option>
+<option>Monthly</option>
+</select>
+</div>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-icons text-lg">filter_list</span>
+</button>
+<div class="h-4 w-px bg-slate-300 dark:bg-slate-600"></div>
+<div class="flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">
+<span class="material-icons text-sm">grid_on</span>
+                    Heatmap Mode
+                </div>
+</div>
+<div class="flex items-center gap-3 text-sm">
+<div class="flex items-center gap-1.5">
+<div class="flex gap-0.5">
+<span class="w-1.5 h-3 bg-green-200 rounded-sm"></span>
+<span class="w-1.5 h-3 bg-green-300 rounded-sm"></span>
+<span class="w-1.5 h-3 bg-green-500 rounded-sm"></span>
+</div>
+<span class="text-xs text-slate-600 dark:text-slate-400">Progress</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+<span class="text-slate-600 dark:text-slate-400">Risk</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-red-500"></span>
+<span class="text-slate-600 dark:text-slate-400">Delayed</span>
+</div>
+</div>
+</div>
+<div class="flex-1 flex overflow-hidden relative">
+<div class="w-80 shrink-0 border-r border-slate-200 dark:border-slate-700 overflow-y-auto bg-white dark:bg-surface-dark z-10">
+<div class="sticky top-0 bg-slate-50 dark:bg-slate-800 z-10 border-b border-slate-200 dark:border-slate-700 h-10 flex items-center px-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">
+<span class="flex-1">Task Name</span>
+<span class="w-16 text-right">Status</span>
+</div>
+<div class="group">
+<div class="h-10 flex items-center px-4 bg-slate-50/50 dark:bg-slate-800/20 hover:bg-slate-100 dark:hover:bg-slate-800 border-b border-slate-100 dark:border-slate-700 cursor-pointer">
+<span class="material-icons text-slate-400 text-sm mr-2 transition-transform group-hover:text-primary">expand_more</span>
+<span class="font-semibold text-sm text-slate-700 dark:text-slate-200">Phase 1: Demolition</span>
+</div>
+<div class="pl-4">
+<div class="h-10 flex items-center px-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700/50 cursor-pointer">
+<span class="w-4"></span>
+<span class="flex-1 text-sm text-slate-600 dark:text-slate-300 truncate">Site Clearance</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">Done</span>
+</div>
+<div class="h-10 flex items-center px-4 bg-blue-50/30 dark:bg-blue-900/10 border-l-2 border-l-primary border-b border-slate-100 dark:border-slate-700/50 cursor-pointer">
+<span class="w-4"></span>
+<span class="flex-1 text-sm text-slate-800 dark:text-slate-100 truncate font-medium">Partition Removal</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">Active</span>
+</div>
+<div class="h-10 flex items-center px-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700/50 cursor-pointer">
+<span class="w-4"></span>
+<span class="flex-1 text-sm text-slate-600 dark:text-slate-300 truncate">Debris Disposal</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">Wait</span>
+</div>
+</div>
+</div>
+<div class="group">
+<div class="h-10 flex items-center px-4 bg-slate-50/50 dark:bg-slate-800/20 hover:bg-slate-100 dark:hover:bg-slate-800 border-b border-slate-100 dark:border-slate-700 cursor-pointer">
+<span class="material-icons text-slate-400 text-sm mr-2 transition-transform group-hover:text-primary">expand_more</span>
+<span class="font-semibold text-sm text-slate-700 dark:text-slate-200">Phase 2: MEP Rough-in</span>
+</div>
+<div class="pl-4">
+<div class="h-10 flex items-center px-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700/50 cursor-pointer">
+<span class="w-4"></span>
+<span class="flex-1 text-sm text-slate-600 dark:text-slate-300 truncate">HVAC Ducting</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">Risk</span>
+</div>
+<div class="h-10 flex items-center px-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700/50 cursor-pointer">
+<span class="w-4"></span>
+<span class="flex-1 text-sm text-slate-600 dark:text-slate-300 truncate">Electrical Conduit</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">0%</span>
+</div>
+<div class="h-10 flex items-center px-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-100 dark:border-slate-700/50 cursor-pointer">
+<span class="w-4"></span>
+<span class="flex-1 text-sm text-slate-600 dark:text-slate-300 truncate">Plumbing Lines</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">0%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-x-auto overflow-y-hidden timeline-scroll bg-white dark:bg-surface-dark relative">
+<div class="h-10 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center min-w-max sticky top-0 z-20">
+<div class="flex">
+<div class="w-32 border-r border-slate-200 dark:border-slate-700 px-2 py-2 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">Oct 16 - 22</div>
+<div class="w-32 border-r border-slate-200 dark:border-slate-700 px-2 py-2 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 bg-primary/5 dark:bg-primary/10 text-primary">Oct 23 - 29</div>
+<div class="w-32 border-r border-slate-200 dark:border-slate-700 px-2 py-2 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">Oct 30 - Nov 5</div>
+<div class="w-32 border-r border-slate-200 dark:border-slate-700 px-2 py-2 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">Nov 6 - 12</div>
+<div class="w-32 border-r border-slate-200 dark:border-slate-700 px-2 py-2 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">Nov 13 - 19</div>
+<div class="w-32 border-r border-slate-200 dark:border-slate-700 px-2 py-2 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">Nov 20 - 26</div>
+<div class="w-32 border-r border-slate-200 dark:border-slate-700 px-2 py-2 text-center text-xs font-semibold text-slate-500 dark:text-slate-400">Nov 27 - Dec 3</div>
+</div>
+</div>
+<div class="relative min-w-max h-full">
+<div class="absolute inset-0 flex pointer-events-none">
+<div class="w-32 border-r border-dashed border-slate-200 dark:border-slate-700/50 h-full"></div>
+<div class="w-32 border-r border-dashed border-primary/20 bg-primary/5 dark:bg-primary/5 h-full relative">
+<div class="absolute top-0 bottom-0 left-1/2 w-px bg-red-500 z-20 shadow-sm"></div>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 bg-red-500 text-white text-[9px] px-1 rounded-sm shadow-sm z-30">Today</div>
+</div>
+<div class="w-32 border-r border-dashed border-slate-200 dark:border-slate-700/50 h-full"></div>
+<div class="w-32 border-r border-dashed border-slate-200 dark:border-slate-700/50 h-full"></div>
+<div class="w-32 border-r border-dashed border-slate-200 dark:border-slate-700/50 h-full"></div>
+<div class="w-32 border-r border-dashed border-slate-200 dark:border-slate-700/50 h-full"></div>
+<div class="w-32 border-r border-dashed border-slate-200 dark:border-slate-700/50 h-full"></div>
+</div>
+<div class="pt-0">
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30"></div>
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30 relative flex items-center">
+<div class="absolute left-4 top-2 h-6 w-28 bg-green-500 dark:bg-green-600 rounded-md shadow-sm flex overflow-hidden">
+<div class="flex-1 border-r border-green-400/50 bg-green-300/20"></div>
+<div class="flex-1 border-r border-green-400/50 bg-green-300/20"></div>
+<div class="flex-1 border-r border-green-400/50 bg-green-300/20"></div>
+<div class="flex-1 bg-green-300/20"></div>
+<span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white tracking-wide">COMPLETED</span>
+</div>
+</div>
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30 relative flex items-center bg-blue-50/20">
+<svg class="absolute left-[7rem] top-[1.5rem] w-8 h-8 pointer-events-none z-0" style="overflow:visible">
+<path d="M -20 -10 L -20 10 L 0 10" fill="none" marker-end="url(#arrowhead)" stroke="#94a3b8" stroke-dasharray="3,3" stroke-width="1.5"></path>
+</svg>
+<div class="absolute left-24 top-2 h-6 w-40 bg-slate-100 dark:bg-slate-700 rounded-md flex overflow-hidden ring-2 ring-primary ring-offset-1 dark:ring-offset-surface-dark">
+<div class="flex h-full w-full">
+<div class="w-1/4 h-full bg-primary heatmap-segment border-r border-white/20"></div>
+<div class="w-1/4 h-full bg-primary heatmap-segment border-r border-white/20"></div>
+<div class="w-1/4 h-full bg-primary heatmap-segment border-r border-white/20"></div>
+<div class="w-1/4 h-full bg-slate-200 dark:bg-slate-600"></div>
+</div>
+<div class="absolute top-0 bottom-0 left-[25%] w-px bg-white/30 z-10"></div>
+<div class="absolute top-0 bottom-0 left-[50%] w-px bg-white/30 z-10"></div>
+<div class="absolute top-0 bottom-0 left-[75%] w-px bg-white/30 z-10"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-500 dark:text-slate-400">75%</span>
+</div>
+</div>
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30 relative flex items-center">
+<div class="absolute left-60 top-2 h-6 w-20 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-md flex overflow-hidden">
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-700"></div>
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-700"></div>
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-700"></div>
+<div class="w-1/4 h-full"></div>
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 uppercase tracking-tight">Planned</span>
+</div>
+</div>
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30 mt-[1px]"></div>
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30 relative flex items-center">
+<div class="absolute left-44 top-2 h-6 w-48 bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-200 dark:border-yellow-800 rounded-md flex overflow-hidden">
+<div class="w-1/4 h-full bg-yellow-400 heatmap-segment border-r border-white/20"></div>
+<div class="w-1/4 h-full border-r border-yellow-100 dark:border-yellow-800/50"></div>
+<div class="w-1/4 h-full border-r border-yellow-100 dark:border-yellow-800/50"></div>
+<div class="w-1/4 h-full"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-medium text-yellow-700 dark:text-yellow-500 flex items-center gap-1">
+<span class="material-icons text-[10px]">warning</span> Delay Risk
+                                </span>
+</div>
+</div>
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30 relative flex items-center">
+<div class="absolute left-80 top-2 h-6 w-32 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-md flex overflow-hidden opacity-60">
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-600"></div>
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-600"></div>
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-600"></div>
+</div>
+</div>
+<div class="h-10 w-full border-b border-slate-100 dark:border-slate-700/30 relative flex items-center">
+<div class="absolute left-[26rem] top-2 h-6 w-32 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-md flex overflow-hidden opacity-60">
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-600"></div>
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-600"></div>
+<div class="w-1/4 h-full border-r border-slate-200 dark:border-slate-600"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-48 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-surface-dark flex">
+<div class="w-1/3 p-4 border-r border-slate-200 dark:border-slate-700 flex flex-col justify-center">
+<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-4">Project Velocity</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-primary/5 dark:bg-primary/10 p-3 rounded-lg border border-primary/10">
+<span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">Overall Progress</span>
+<div class="text-2xl font-bold text-primary font-display tabular-nums">42%</div>
+<div class="text-xs text-green-600 font-medium flex items-center mt-1">
+<span class="material-icons text-[10px] mr-1">arrow_upward</span> +2.4%
+                        </div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+<span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">Tasks Delayed</span>
+<div class="text-2xl font-bold text-slate-700 dark:text-slate-200 font-display tabular-nums">3</div>
+<div class="text-xs text-red-500 font-medium flex items-center mt-1">
+<span class="material-icons text-[10px] mr-1">warning</span> Action Req.
+                        </div>
+</div>
+</div>
+</div>
+<div class="w-2/3 p-4 relative">
+<div class="flex justify-between items-center mb-2">
+<h3 class="text-sm font-semibold text-slate-700 dark:text-slate-200">Weekly Output vs Plan</h3>
+<div class="flex gap-4 text-xs">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-slate-300"></span>
+<span class="text-slate-500">Planned</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-slate-500">Actual</span>
+</div>
+</div>
+</div>
+<div class="h-32 w-full flex items-end justify-between gap-2 pt-4 pb-2" data-alt="Bar chart showing weekly productivity progress comparison">
+<div class="flex-1 flex flex-col justify-end gap-1 h-full group">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[40%] relative group-hover:bg-slate-300 transition-colors"></div>
+<div class="w-full bg-primary rounded-t-sm h-[35%] relative opacity-90 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-center text-slate-400 mt-1">W1</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full group">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[55%] relative group-hover:bg-slate-300 transition-colors"></div>
+<div class="w-full bg-primary rounded-t-sm h-[58%] relative opacity-90 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-center text-slate-400 mt-1">W2</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full group">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[65%] relative group-hover:bg-slate-300 transition-colors"></div>
+<div class="w-full bg-primary rounded-t-sm h-[60%] relative opacity-90 group-hover:opacity-100 transition-opacity"></div>
+<span class="text-[10px] text-center text-slate-400 mt-1">W3</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full group">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[75%] relative group-hover:bg-slate-300 transition-colors"></div>
+<div class="w-full bg-primary rounded-t-sm h-[40%] relative opacity-90 group-hover:opacity-100 transition-opacity">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-red-100 text-red-600 text-[9px] font-bold px-1.5 py-0.5 rounded border border-red-200">-35%</div>
+</div>
+<span class="text-[10px] text-center text-slate-400 mt-1">W4</span>
+</div>
+<div class="flex-1 flex flex-col justify-end gap-1 h-full opacity-50">
+<div class="w-full bg-slate-200 dark:bg-slate-700 rounded-t-sm h-[80%] border-t-2 border-dashed border-slate-400"></div>
+<div class="w-full bg-transparent rounded-t-sm h-0"></div>
+<span class="text-[10px] text-center text-slate-400 mt-1">W5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="w-96 bg-white dark:bg-surface-dark border-l border-slate-200 dark:border-slate-700 flex flex-col shadow-xl z-20 m-4 ml-0 rounded-xl overflow-hidden">
+<div class="p-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-800">
+<div>
+<h2 class="font-bold text-slate-800 dark:text-white flex items-center gap-2 text-lg">
+<span class="material-icons text-primary animate-pulse">camera_alt</span>
+                    Live Snapshot
+                </h2>
+<p class="text-xs text-slate-500 mt-1">Real-time site verification</p>
+</div>
+<button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-5 space-y-6">
+<div class="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg p-3">
+<div class="text-[10px] uppercase font-bold text-primary tracking-wider mb-1">Active Task</div>
+<div class="font-semibold text-slate-800 dark:text-slate-100 mb-1">Partition Removal</div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-500 dark:text-slate-400">Zone B, Floor 2</span>
+<span class="bg-white dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 font-medium text-slate-600 dark:text-slate-300">75% Complete</span>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-2">
+<label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider">Latest Capture</label>
+<span class="text-[10px] text-slate-400 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Live 2m ago
+                    </span>
+</div>
+<div class="relative rounded-xl overflow-hidden shadow-sm group">
+<div class="aspect-video bg-slate-900 relative">
+<div class="absolute inset-0 bg-cover bg-center opacity-90" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjmvnJPXOI6L2I-ifoVwR_PkVbJVzx_fE9X7YbMuz4xnJjgHllEbnRzmm7in0Kf5bmm2MV99hq4tu9ax4yrOQi6pcJORCHvHSWXrOIvPaTD58i3vOlgXwrZr-zkpynejNCardlFkUPuamFScnVq7CE03HT-LUKnJOkQGCLur-1vw5l267CkIANpVL4iY1xwL6u9BI3Bze_VM4QgtcXzWrtW6dYGODkPc0qa0S2u8e02zAK2Xxfh_ah50plOY-69sBodkP7_4X1Db6-');"></div>
+<div class="absolute inset-0 border-2 border-primary/30 m-4 rounded-lg pointer-events-none">
+<div class="absolute top-2 left-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded backdrop-blur-sm">
+                                 CAM-04: North Wall
+                             </div>
+<div class="absolute top-1/4 left-1/3 w-4 h-4 border border-green-400 rounded-full flex items-center justify-center">
+<div class="w-1 h-1 bg-green-400 rounded-full"></div>
+</div>
+<div class="absolute bottom-1/3 right-1/4 w-4 h-4 border border-green-400 rounded-full flex items-center justify-center">
+<div class="w-1 h-1 bg-green-400 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-white hover:text-primary transition-colors"><span class="material-icons text-lg">fullscreen</span></button>
+<div class="flex gap-2">
+<button class="text-white hover:text-primary transition-colors"><span class="material-icons text-lg">edit</span></button>
+<button class="text-white hover:text-primary transition-colors"><span class="material-icons text-lg">share</span></button>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 text-center">
+<div class="text-[10px] text-slate-500 uppercase mb-1">Schedule Variance</div>
+<div class="text-lg font-bold text-green-600 font-display">On Time</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 text-center">
+<div class="text-[10px] text-slate-500 uppercase mb-1">Quality Check</div>
+<div class="text-lg font-bold text-yellow-600 font-display">Pending</div>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Timeline Snaps</label>
+<div class="space-y-3 relative before:absolute before:left-3 before:top-2 before:bottom-0 before:w-px before:bg-slate-200 dark:before:bg-slate-700">
+<div class="relative pl-8">
+<div class="absolute left-[0.35rem] top-1 w-2.5 h-2.5 bg-primary rounded-full ring-4 ring-white dark:ring-surface-dark"></div>
+<div class="bg-white dark:bg-surface-light dark:bg-opacity-5 rounded border border-slate-200 dark:border-slate-700 p-2 flex gap-3 cursor-pointer hover:border-primary transition-colors">
+<div class="w-12 h-12 rounded bg-slate-200 bg-cover bg-center shrink-0" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjmvnJPXOI6L2I-ifoVwR_PkVbJVzx_fE9X7YbMuz4xnJjgHllEbnRzmm7in0Kf5bmm2MV99hq4tu9ax4yrOQi6pcJORCHvHSWXrOIvPaTD58i3vOlgXwrZr-zkpynejNCardlFkUPuamFScnVq7CE03HT-LUKnJOkQGCLur-1vw5l267CkIANpVL4iY1xwL6u9BI3Bze_VM4QgtcXzWrtW6dYGODkPc0qa0S2u8e02zAK2Xxfh_ah50plOY-69sBodkP7_4X1Db6-');"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">Partition Framed</h4>
+<span class="text-[10px] text-slate-400">10:42 AM</span>
+</div>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">Verified by Site Engineer</p>
+</div>
+</div>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-[0.35rem] top-1 w-2.5 h-2.5 bg-slate-300 dark:bg-slate-600 rounded-full ring-4 ring-white dark:ring-surface-dark"></div>
+<div class="bg-white dark:bg-surface-light dark:bg-opacity-5 rounded border border-slate-200 dark:border-slate-700 p-2 flex gap-3 cursor-pointer hover:border-slate-300 transition-colors">
+<div class="w-12 h-12 rounded bg-slate-200 bg-cover bg-center shrink-0 grayscale" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD0Qw1J9VFn2P-M4aOmrSmBurmQyWq33jvIfO2OExNNvrlTYwinDEWX21NXJOFkcJcWpQuGvRSSSGEyRuPh-sBV4jv_riCH9BvpAw017u50HU3g9zZwLqHhAjjyGNUIf6GnLdhq2QRNFQ8HFVKOPdrVRZOsnK_lIV_iyBBua9DSFW9OTmQMMmVEVehU00dsFSSRt7WGiJCT3adwq3RY4vD4HD3McX1LbDzDampO-nxYIwqsnVj4dnwwms2_eRQuu0FyaG6U9wqcxSzQ');"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h4 class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">Morning Briefing</h4>
+<span class="text-[10px] text-slate-400">08:15 AM</span>
+</div>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 truncate">Safety protocols reviewed</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full py-2 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors flex items-center justify-center gap-2">
+<span class="material-icons text-sm">upload</span> Upload New Photo
+                </button>
+</div>
+</div>
+<div class="p-5 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+<button class="w-full bg-primary hover:bg-primary-dark text-white font-medium py-2.5 rounded-lg shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2">
+<span class="material-icons text-sm">verified</span>
+                Approve Progress
+            </button>
+</div>
+</aside>
+</main>
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+<defs>
+<marker id="arrowhead" markerHeight="6" markerWidth="6" orient="auto-start-reverse" refX="5" refY="5" viewBox="0 0 10 10">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"></path>
+</marker>
+</defs>
+</svg>
+
+</body></html>

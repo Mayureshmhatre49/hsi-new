@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Detail Workspace - HSI Smart Execution System™</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 font-display min-h-screen flex flex-col">
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+<div class="px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-primary font-bold text-xl tracking-tight">
+<span class="material-icons text-3xl">apartment</span>
+                    HSI Smart Exec™
+                </div>
+<nav class="hidden md:flex items-center text-sm text-slate-500">
+<a class="hover:text-primary transition-colors" href="#">Projects</a>
+<span class="material-icons text-base mx-2">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Corporate Interiors</a>
+<span class="material-icons text-base mx-2">chevron_right</span>
+<span class="font-medium text-slate-800">HQ Renovation - Tower A</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-3 px-3 py-1.5 bg-slate-100 rounded-lg border border-slate-200">
+<span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Multi-Project View</span>
+<button class="relative inline-flex h-6 w-11 items-center rounded-full bg-slate-300 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+<span class="sr-only">Enable multi-project view</span>
+<span class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition-transform"></span>
+</button>
+</div>
+<button class="p-2 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-full transition-colors relative">
+<span class="material-icons">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-slate-200">
+<div class="text-right hidden lg:block">
+<div class="text-sm font-semibold text-slate-800">Sarah Jenkins</div>
+<div class="text-xs text-slate-500">Senior Project Manager</div>
+</div>
+<img alt="User Profile" class="w-9 h-9 rounded-full object-cover border border-slate-200" data-alt="Professional woman portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6Qf4fffcLsF5tmZuwSYfUIN9eQlONqVY-sYYA2zuzcFZsRkVnW0UwIckM58W1JZhzpvrQPH5_a-o46h4oF8-YkTvx_jMQDRpsBOit9Ae_x9mxFQnihMn5QyWe3Q4sdIaKXqOiDOcgL9hcurVaFhaC4BzJWikkSV85M0jYHaKcNc5415-hQXHnDi3jY8frwQTUUN7m-xolbViFgqFPWFBl3LGxtA2phRoHJEUvFmREwgDxW_qiDf94gJ1YkW8bKvKlQeY6p69HvmK8"/>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 p-6 md:p-8 max-w-[1600px] mx-auto w-full space-y-6">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<h1 class="text-3xl font-bold text-slate-900">HQ Renovation - Tower A</h1>
+<span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider rounded-full border border-emerald-200 flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        On Track
+                    </span>
+</div>
+<div class="flex items-center gap-6 text-sm text-slate-500">
+<div class="flex items-center gap-1">
+<span class="material-icons text-base">calendar_today</span>
+<span>Start: Jan 15, 2024</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-icons text-base">event</span>
+<span>Target: Nov 30, 2024</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-icons text-base">person</span>
+<span>Lead: <span class="font-medium text-slate-700">James Wilson</span></span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 font-medium transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-icons text-base">download</span>
+                    Export Report
+                </button>
+<button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 font-medium transition-colors flex items-center gap-2 shadow-sm shadow-blue-200">
+<span class="material-icons text-base">edit</span>
+                    Edit Project
+                </button>
+</div>
+</div>
+<div class="border-b border-slate-200">
+<nav aria-label="Tabs" class="-mb-px flex gap-8 overflow-x-auto">
+<a class="border-primary text-primary whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2" href="#">
+<span class="material-icons text-lg">dashboard</span>
+                    Overview
+                </a>
+<a class="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2" href="#">
+<span class="material-icons text-lg">architecture</span>
+                    Planning &amp; BOQ
+                </a>
+<a class="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2" href="#">
+<span class="material-icons text-lg">shopping_cart</span>
+                    Procurement
+                </a>
+<a class="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2" href="#">
+<span class="material-icons text-lg">construction</span>
+                    Execution
+                </a>
+<a class="border-transparent text-slate-500 hover:border-slate-300 hover:text-slate-700 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium flex items-center gap-2" href="#">
+<span class="material-icons text-lg">payments</span>
+                    Finance
+                </a>
+<a class="border-transparent text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50/50 whitespace-nowrap border-b-2 py-4 px-3 text-sm font-bold flex items-center gap-2 rounded-t-lg transition-colors ml-auto" href="#">
+<span class="material-icons text-lg">auto_awesome</span>
+                    AI Insights
+                </a>
+</nav>
+</div>
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-medium text-slate-500">Overall Progress</p>
+<h3 class="text-2xl font-bold text-slate-900 mt-1">68%</h3>
+</div>
+<span class="p-2 bg-blue-50 text-primary rounded-lg">
+<span class="material-icons text-xl">trending_up</span>
+</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2.5 mb-2">
+<div class="bg-primary h-2.5 rounded-full" style="width: 68%"></div>
+</div>
+<p class="text-xs text-slate-500">+4% since last week</p>
+</div>
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-medium text-slate-500">Budget Utilized</p>
+<h3 class="text-2xl font-bold text-slate-900 mt-1">$845k</h3>
+</div>
+<span class="p-2 bg-green-50 text-green-600 rounded-lg">
+<span class="material-icons text-xl">attach_money</span>
+</span>
+</div>
+<div class="flex items-end gap-2 text-xs">
+<span class="font-medium text-slate-700">Total: $1.2M</span>
+<span class="text-slate-400">|</span>
+<span class="text-emerald-600 font-medium">Under budget by 2%</span>
+</div>
+</div>
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-sm font-medium text-slate-500">Open Critical Items</p>
+<h3 class="text-2xl font-bold text-slate-900 mt-1">3</h3>
+</div>
+<span class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+<span class="material-icons text-xl">warning_amber</span>
+</span>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-xs text-slate-600">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+<span>HVAC Delay (Lvl 3)</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-600">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span>Tile Selection Pending</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="p-5 border-b border-slate-100 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-slate-100 rounded-lg">
+<span class="material-symbols-outlined text-slate-600">view_in_ar</span>
+</div>
+<div>
+<h2 class="text-lg font-bold text-slate-900">Real-Time Construction Progress</h2>
+<p class="text-xs text-slate-500">BIM Digital Twin • Live Sync: 12 min ago</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-lg border border-slate-100">
+<span class="text-sm font-medium text-slate-600">Project Complete</span>
+<div class="w-px h-4 bg-slate-300"></div>
+<span class="text-lg font-bold text-primary">68%</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 h-[450px]">
+<div class="lg:col-span-3 bg-slate-100 relative group overflow-hidden border-r border-slate-200">
+<div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-100">
+<div class="text-center opacity-60">
+<span class="material-symbols-outlined text-6xl text-slate-400 mb-2">3d_rotation</span>
+<p class="text-sm font-medium text-slate-500">Interactive BIM Model</p>
+</div>
+<div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: radial-gradient(#94a3b8 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-4 border-slate-300/50 rounded-full animate-[spin_20s_linear_infinite]"></div>
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-primary/20 rounded bg-white/10 backdrop-blur-sm shadow-xl flex items-center justify-center">
+<div class="w-32 h-40 bg-slate-300 rounded shadow-inner relative overflow-hidden">
+<div class="absolute bottom-0 w-full h-[68%] bg-primary/20 border-t border-primary/40"></div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<div class="flex flex-col gap-2">
+<button class="w-8 h-8 bg-white rounded-md shadow flex items-center justify-center hover:bg-slate-50 text-slate-600">
+<span class="material-icons text-sm">add</span>
+</button>
+<button class="w-8 h-8 bg-white rounded-md shadow flex items-center justify-center hover:bg-slate-50 text-slate-600">
+<span class="material-icons text-sm">remove</span>
+</button>
+</div>
+<div class="bg-white/90 backdrop-blur px-3 py-1.5 rounded-md shadow text-xs font-medium text-slate-600 border border-slate-100">
+                                    Display: Structural + MEP
+                                </div>
+</div>
+<div class="absolute top-4 right-4">
+<button class="p-2 bg-white/90 hover:bg-white backdrop-blur rounded-lg shadow-sm border border-slate-200 text-slate-600 transition-colors">
+<span class="material-icons text-xl">fullscreen</span>
+</button>
+</div>
+</div>
+<div class="lg:col-span-2 bg-white flex flex-col h-full overflow-hidden">
+<div class="p-4 bg-slate-50 border-b border-slate-200">
+<h3 class="text-sm font-semibold text-slate-800 uppercase tracking-wide">Zone Breakdown</h3>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-5">
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-sm font-semibold text-slate-800">Lobby &amp; Reception</span>
+</div>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">92%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 mb-2">
+<div class="bg-emerald-500 h-1.5 rounded-full" style="width: 92%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-slate-400">Finishing touches</span>
+<button class="text-[10px] font-bold uppercase tracking-wider text-primary hover:text-primary/80 flex items-center gap-1">
+<span class="material-icons text-[12px]">videocam</span> Live Feed
+                                        </button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-sm font-semibold text-slate-800">Office Floor (Lvl 2)</span>
+</div>
+<span class="text-xs font-bold text-primary bg-blue-50 px-2 py-0.5 rounded border border-blue-100">75%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 mb-2">
+<div class="bg-primary h-1.5 rounded-full" style="width: 75%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-slate-400">Installing partitions</span>
+<button class="text-[10px] font-bold uppercase tracking-wider text-primary hover:text-primary/80 flex items-center gap-1">
+<span class="material-icons text-[12px]">videocam</span> Live Feed
+                                        </button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="text-sm font-semibold text-slate-800">Conf. Rooms (Lvl 3)</span>
+</div>
+<span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">45%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 mb-2">
+<div class="bg-amber-500 h-1.5 rounded-full" style="width: 45%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-slate-400">HVAC installation ongoing</span>
+<button class="text-[10px] font-bold uppercase tracking-wider text-primary hover:text-primary/80 flex items-center gap-1">
+<span class="material-icons text-[12px]">videocam</span> Live Feed
+                                        </button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-1.5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-slate-400"></span>
+<span class="text-sm font-semibold text-slate-800">Executive Suites</span>
+</div>
+<span class="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">15%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 mb-2">
+<div class="bg-slate-400 h-1.5 rounded-full" style="width: 15%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-xs text-slate-400">Framing started</span>
+<button class="text-[10px] font-bold uppercase tracking-wider text-primary hover:text-primary/80 flex items-center gap-1">
+<span class="material-icons text-[12px]">videocam</span> Live Feed
+                                        </button>
+</div>
+</div>
+</div>
+<div class="p-4 bg-slate-50 border-t border-slate-200 mt-auto">
+<button class="w-full py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-sm font-medium rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">analytics</span>
+                                    View Detailed Analytics
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-bold text-slate-800">Key Milestones</h2>
+<button class="text-sm text-primary hover:text-primary/80 font-medium">View Full Schedule</button>
+</div>
+<div class="relative">
+<div class="absolute top-1/2 left-0 w-full h-1 bg-slate-100 -translate-y-1/2 rounded-full hidden md:block z-0"></div>
+<div class="absolute top-1/2 left-0 w-2/3 h-1 bg-primary/20 -translate-y-1/2 rounded-full hidden md:block z-0"></div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative z-10">
+<div class="flex flex-col items-center text-center md:gap-3 group">
+<div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center border-2 border-white shadow-sm mb-2 md:mb-0">
+<span class="material-icons text-sm">check</span>
+</div>
+<div class="bg-slate-50 md:bg-transparent p-3 md:p-0 rounded-lg w-full">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Feb 20</p>
+<p class="text-sm font-bold text-slate-800">Concept Design</p>
+<p class="text-xs text-green-600 font-medium mt-1">Completed</p>
+</div>
+</div>
+<div class="flex flex-col items-center text-center md:gap-3 group">
+<div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center border-2 border-white shadow-sm mb-2 md:mb-0">
+<span class="material-icons text-sm">check</span>
+</div>
+<div class="bg-slate-50 md:bg-transparent p-3 md:p-0 rounded-lg w-full">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Apr 15</p>
+<p class="text-sm font-bold text-slate-800">Material Selection</p>
+<p class="text-xs text-green-600 font-medium mt-1">Completed</p>
+</div>
+</div>
+<div class="flex flex-col items-center text-center md:gap-3 group">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center border-4 border-white shadow-lg mb-2 md:mb-[-4px]">
+<span class="material-icons text-base">engineering</span>
+</div>
+<div class="bg-blue-50 md:bg-transparent p-3 md:p-0 rounded-lg w-full border border-blue-100 md:border-none">
+<p class="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Current</p>
+<p class="text-sm font-bold text-primary">Civil Works &amp; HVAC</p>
+<p class="text-xs text-slate-500 mt-1">Due in 5 days</p>
+</div>
+</div>
+<div class="flex flex-col items-center text-center md:gap-3 group opacity-60">
+<div class="w-8 h-8 rounded-full bg-white border-2 border-slate-300 text-slate-400 flex items-center justify-center mb-2 md:mb-0">
+<span class="text-xs font-bold">4</span>
+</div>
+<div class="bg-slate-50 md:bg-transparent p-3 md:p-0 rounded-lg w-full">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Oct 10</p>
+<p class="text-sm font-bold text-slate-800">Interior Fit-out</p>
+</div>
+</div>
+<div class="flex flex-col items-center text-center md:gap-3 group opacity-60">
+<div class="w-8 h-8 rounded-full bg-white border-2 border-slate-300 text-slate-400 flex items-center justify-center mb-2 md:mb-0">
+<span class="text-xs font-bold">5</span>
+</div>
+<div class="bg-slate-50 md:bg-transparent p-3 md:p-0 rounded-lg w-full">
+<p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Nov 30</p>
+<p class="text-sm font-bold text-slate-800">Handover</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<h2 class="text-lg font-bold text-slate-800">Site Progress Gallery</h2>
+<span class="text-xs font-medium px-2 py-1 bg-slate-100 text-slate-600 rounded">Updated Today</span>
+</div>
+<button class="px-3 py-1.5 text-sm border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 font-medium flex items-center gap-2">
+<span class="material-icons text-sm">add_a_photo</span>
+                            Upload
+                        </button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+<div class="group relative rounded-lg overflow-hidden border border-slate-200 aspect-video">
+<img alt="Construction site interior with exposed beams" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Interior construction site view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHP3msbpuBZ12Qacn07pMArXUXUP4AH4JrlJDhmvOcLidgIePvxq2K0XZhbgQ0k2f5-3mEyvIaExumx4kGF5assqOwRRwsZ2ZBVHblPjV1brM6n9U_qSvp1HSxtyjL5tg5YIFqa-7ReOWGvaQY8nN9l2XYtOtqKFrWcafnK7x1xcpCMYXAlhhFBQwIKArHuqOcXLVqQHR_RwgndQNDfTtxFWHt5z6B5u0AATN5NmW5KOWGhHxR10B98GsHpnwjTn6DxIBkVp1hqWGs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+<p class="text-white text-sm font-semibold">Lobby Reception</p>
+<p class="text-white/80 text-xs">Oct 24, 2024 • Verified</p>
+</div>
+</div>
+<div class="group relative rounded-lg overflow-hidden border border-slate-200 aspect-video">
+<img alt="Conference room framing and wiring" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Office conference room framing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYKkdIpu3-BrkVK7PxIB9kf_UZ5MZbyGftGxHmssWNileEPkLz6W_3U89DHMaNpbPTZSrqBHJFyIk0ELyXahhVY4Pxv8b3fqEyj7zBsnqw33qmMZhGg9UDfhfSadGmFAmr_1uB1q90LoHpWYx8EfG8QgwIwOu1QEeE8sEajKQuelTxNFSSZRY529YBXzEnv3j7n8cKsRQSBx9wE4Knl_YS3U9EHCwlrCrBrm6b2n-FR-TznMgygTI4LM7-ITSm2LFrEhOOrofCk8Is"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+<p class="text-white text-sm font-semibold">Conference Room B</p>
+<p class="text-white/80 text-xs">Oct 22, 2024</p>
+</div>
+</div>
+<div class="group relative rounded-lg overflow-hidden border border-slate-200 aspect-video">
+<img alt="Corridor with freshly painted walls" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Office corridor painted walls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlQ9NPWaCaEyiGgf4D8f2GyqOGpRCx4RGrHEqTwq5PjqlDHPDzix6gVjVCynnm_wToIkbpqsA2lO90DR3uBlYsmMuBY9211hlHd6-H0TFfbrciB02TGZNQhbLw77hNZm2IIv-sBkLVyeXKmcctHLVDfIV0y3JaRd2Ctoyc_ehpWgPm_H-83wWxVrfwGqYyz_Ixg75OKZjl1ObvtiNxflcvBu04yftVhhgDOWj4Lrkjz7P6dMEWcSx16kYhjg3pWHh2y1hknxVX0nvK"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+<p class="text-white text-sm font-semibold">North Corridor</p>
+<p class="text-white/80 text-xs">Oct 20, 2024</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+<h3 class="text-sm font-bold text-slate-800 uppercase tracking-wide mb-4">Core Team</h3>
+<div class="flex items-center -space-x-2 overflow-hidden mb-4">
+<img alt="Team member" class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" data-alt="Male team member headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCndLb4OU69hElrvlYe5OQWY8r925rBCwXxF_amS1NzAN6fw3babjphb_RiT0PgTBuWE-Jpg7Z6mvoKB03ADoOc5VmX0clawXFH13Kf1C1mDXRYN4FRFVvw0mLcIOCTJU00haqoqFrcM8TNHp1a-pt5v0x8MRuHKlIG-On7yFSnupJxDoghf3FfMBuMkB-3eHTACcaIhINGM_BIcytxdLqIrDw98_db5U5WDWYECT1HHO6RFIPMnO7Qzv3DFIIabeFC7Wnf_qPyIeec"/>
+<img alt="Team member" class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" data-alt="Female team member headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh-K1iPzaZneSYNBR9zI8fXFfkTxvDmvLLT6cDpH79u79sijKRKCjXsk8rVz5BjlHZpgGD3oopWIZaBoRe6jnwcJEKuzDZBgKpA3O9wZMzfByJk1zON5exBcsCO8bTORlXdcQ37CoijeDfuBvR80FvCUh_6JhIHEG4mEshmtNKNMYunIdCxp5N663fUtNmVXjI77omYf4CmYD49AofuIh-OXfjvynhg6tN4ZoTJrfzqbAyhZst6K4EJ4r8nbJKEfNDz8Vmw35dIM9P"/>
+<img alt="Team member" class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover" data-alt="Male team member headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW_OmxrEf15MaLuqGxCZLOSJCzWxp57Bk1k9M5oj8CsmcV5Eb7dPIvLnI9vfbZSMZ8Ej6XDO_nDBXpHXRKpvYjMNJJF6xjacwAg_oOtiungccZZKRgZSUm0OdowukoniCy8Tffgd7mcC-VDGv065CP5YZQrlIwB_LWvAVkJWCqJPCwk_xr7eNUUL84l1DTBh0LGOF-YgHDHl2CQ8hExKv6zsxR6WoXdugpuuk2JjNbzJHDZBGgdKbKAqKooUn9PfxCRmNOQnL6ekaT"/>
+<div class="h-10 w-10 rounded-full ring-2 ring-white bg-slate-100 flex items-center justify-center text-xs font-medium text-slate-500">+4</div>
+</div>
+<button class="w-full py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:border-primary hover:text-primary transition-colors">Manage Team Access</button>
+</div>
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+<h3 class="text-sm font-bold text-slate-800">Latest Updates</h3>
+<button class="text-primary text-xs font-medium hover:underline">View All</button>
+</div>
+<div class="max-h-[400px] overflow-y-auto">
+<div class="p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
+<div class="flex gap-3">
+<div class="mt-1">
+<div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+<span class="material-icons text-sm">description</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-slate-800"><span class="font-semibold">James W.</span> approved the updated BOQ for electrical fixtures.</p>
+<p class="text-xs text-slate-400 mt-1">2 hours ago</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
+<div class="flex gap-3">
+<div class="mt-1">
+<div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center">
+<span class="material-icons text-sm">warning</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-slate-800">New issue flagged: <span class="font-medium text-amber-700">Delayed shipment of tiles</span>.</p>
+<p class="text-xs text-slate-400 mt-1">Yesterday, 4:30 PM</p>
+</div>
+</div>
+</div>
+<div class="p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+<div class="flex gap-3">
+<div class="mt-1">
+<div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+<span class="material-icons text-sm">paid</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-slate-800">Payment of <span class="font-mono text-slate-600 font-medium">$12,400</span> released to Vendor ABC.</p>
+<p class="text-xs text-slate-400 mt-1">Oct 23, 10:00 AM</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+<div class="relative w-full h-48 rounded-lg overflow-hidden">
+<img alt="Map view of project location" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" data-alt="Abstract map view" data-location="Austin, Texas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhe3Sn9yysSYN1mjkNLLQ7erCQK8AfSu8CakBSjmbxoEN0kIWf3d6nJPwrGEF2nYzMU_KSV4gVLiB5dDnkZqeBqVcLAeHOZOH2FRyCjkwaJa0Brg9fObVJfmJv6Hqeg1c4xPMU3hdUmg1zXAeTvoocXhP_yQKqjgXH0nNfQR5ZRD9CunkiXIiNC7TxcbwNlZN2xnc_VCvc_CvmYuf9ZYfuhZ9SbOAwj_MVPUWqcNhYnJx6LJZnzoFMefYqwcfjwmLp67WdMJxrHRtH"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md flex items-center gap-2">
+<span class="material-icons text-red-500">place</span>
+<div class="text-sm font-semibold text-slate-800">
+                                    Austin, TX <br/>
+<span class="text-xs font-normal text-slate-500">201 Congress Ave</span>
+</div>
+</div>
+</div>
+<button class="absolute bottom-2 right-2 bg-white text-slate-600 p-1.5 rounded shadow hover:bg-slate-50">
+<span class="material-icons text-lg">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>
